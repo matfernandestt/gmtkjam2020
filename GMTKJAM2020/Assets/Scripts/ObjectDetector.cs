@@ -1,11 +1,15 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class ObjectDetector : MonoBehaviour
 {
+    public static Action disableAllOutlines; 
+    
     [SerializeField] private LayerMask detectionMask;
 
     private Vector3 detectionPoint;
     private bool hasInSight;
+    private bool hasButtonOutlined;
 
     private GenericButton hoveredButton; 
 
@@ -13,6 +17,8 @@ public class ObjectDetector : MonoBehaviour
     {
         GameInput.interactionDetection += UpdateDetection;
         GameInput.usedAction += OnButtonClick;
+        
+        disableAllOutlines?.Invoke();
     }
 
     private void OnDestroy()
@@ -38,9 +44,19 @@ public class ObjectDetector : MonoBehaviour
             detectionPoint = hit.point;
 
             hoveredButton = hit.transform.GetComponent<GenericButton>();
+            if (hoveredButton != null)
+            {
+                hasButtonOutlined = true;
+                hoveredButton.OnHover();
+            }
         }
         else
         {
+            if (hasButtonOutlined)
+            {
+                disableAllOutlines?.Invoke();
+                hasButtonOutlined = false;
+            }
             hasInSight = false;
             hoveredButton = null;
         }
