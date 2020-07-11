@@ -24,7 +24,7 @@ PrefabInstance:
     - target: {fileID: 3462453682556249105, guid: 2d45d1870eb1d8d4fb9b88f0e233011a,
         type: 3}
       propertyPath: m_Name
-      value: YellowButton
+      value: YellowButton Variant
       objectReference: {fileID: 0}
     - target: {fileID: 3462453682556249109, guid: 2d45d1870eb1d8d4fb9b88f0e233011a,
         type: 3}
