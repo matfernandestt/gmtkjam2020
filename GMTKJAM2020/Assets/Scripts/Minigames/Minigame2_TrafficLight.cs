@@ -27,8 +27,11 @@ public class Minigame2_TrafficLight : MonoBehaviour
             {
                 cars[i].getRespawnPoint = respawnPoint;
                 cars[i].isLaneStopped = false;
-                cars[i].MoveCar();
-                yield return new WaitForSeconds(.3f);
+                if (cars[i].gameObject.activeSelf)
+                {
+                    cars[i].MoveCar();
+                    yield return new WaitForSeconds(.3f);
+                }
             }
         }
         StartCoroutine(Wait());
