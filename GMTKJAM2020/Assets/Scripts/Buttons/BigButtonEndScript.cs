@@ -1,13 +1,24 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class BigButtonEndScript : MonoBehaviour
 {
-    bool isPressed = false;
+    private bool isPressed = false;
 
-    void BigOver()
+    private void Awake()
+    {
+        BigButton.bigButtonEnd += BigOver;
+    }
+
+    private void OnDestroy()
+    {
+        BigButton.bigButtonEnd -= BigOver;
+    }
+
+    private void BigOver()
     {
         if (isPressed == true)
             return;

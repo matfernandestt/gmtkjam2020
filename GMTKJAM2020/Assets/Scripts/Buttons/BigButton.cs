@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class BigButton : GenericButton
 {
+    public static Action bigButtonEnd;
+
     private enum ButtonState { Closed, Opened }
 
     private ButtonState state = ButtonState.Closed;
@@ -34,6 +36,7 @@ public class BigButton : GenericButton
                 break;
             case ButtonState.Opened:
                 anim.SetTrigger(ButtonPress);
+                bigButtonEnd?.Invoke();
                 break;
         }
     }
