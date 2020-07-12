@@ -9,6 +9,8 @@ public class Fader : MonoBehaviour
 
     [SerializeField] private Image imgFade;
 
+    private Coroutine transitionCoroutine;
+
     private void Awake()
     {
         i = this;
@@ -17,6 +19,8 @@ public class Fader : MonoBehaviour
     public static void FadeIn()
     {
         var duration = 1f;
+        if(i.transitionCoroutine != null)
+            i.StopCoroutine(i.transitionCoroutine);
         i.imgFade.color = new Color(i.imgFade.color.r, i.imgFade.color.g, i.imgFade.color.b, 0f);
         IEnumerator Fade(float alpha)
         {
@@ -31,12 +35,16 @@ public class Fader : MonoBehaviour
                 yield return null;
             }
         }
-        i.StartCoroutine(Fade(1f));
+        if(i.transitionCoroutine != null)
+            i.StopCoroutine(i.transitionCoroutine);
+        i.transitionCoroutine = i.StartCoroutine(Fade(1f));
     }
 
     public static void FadeOut()
     {
         var duration = 1f;
+        if(i.transitionCoroutine != null)
+            i.StopCoroutine(i.transitionCoroutine);
         i.imgFade.color = new Color(i.imgFade.color.r, i.imgFade.color.g, i.imgFade.color.b, 1f);
         IEnumerator Fade(float alpha)
         {
@@ -51,6 +59,8 @@ public class Fader : MonoBehaviour
                 yield return null;
             }
         }
-        i.StartCoroutine(Fade(0f));
+        if(i.transitionCoroutine != null)
+            i.StopCoroutine(i.transitionCoroutine);
+        i.transitionCoroutine = i.StartCoroutine(Fade(0f));
     }
 }

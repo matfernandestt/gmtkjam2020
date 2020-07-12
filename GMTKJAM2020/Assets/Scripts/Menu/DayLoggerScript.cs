@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -31,9 +32,19 @@ public class DayLoggerScript : MonoBehaviour
     private int currentDay = 0;
     private float timeLeft;
     private bool inTimer = false;
+
+    private bool pressedButton;
+    
     private void Awake()
     {
         currentDay = PlayerPrefs.GetInt("CurrentDay");
+
+        StartingButton.onStartingButtonPress += OnUpdateTimer;
+    }
+
+    private void OnDestroy()
+    {
+        StartingButton.onStartingButtonPress -= OnUpdateTimer;
     }
 
     private void Start()
@@ -47,7 +58,46 @@ public class DayLoggerScript : MonoBehaviour
         SetDayLog();
     }
 
-
+    private void OnUpdateTimer()
+    {
+        if (pressedButton) return;
+        pressedButton = true;
+        switch (currentDay)
+        {
+            case 1:
+                StartCoroutine(NexDay(day1Timer));
+                minigame1.SetActive(true);
+                screen1.SetActive(true);
+                break;
+            case 2:
+                StartCoroutine(NexDay(day2Timer));
+                mark.SetActive(true);
+                minigame1.SetActive(true);
+                screen1.SetActive(true);
+                minigame2.SetActive(true);
+                screen2.SetActive(true);
+                break;
+            case 3:
+                StartCoroutine(NexDay(day3Timer));
+                minigame1.SetActive(true);
+                screen1.SetActive(true);
+                minigame2.SetActive(true);
+                screen2.SetActive(true);
+                minigame3.SetActive(true);
+                screen3.SetActive(true);
+                break;
+            case 4:
+                StartCoroutine(NexDay(day4Timer));
+                minigame1.SetActive(true);
+                screen1.SetActive(true);
+                minigame2.SetActive(true);
+                screen2.SetActive(true);
+                minigame3.SetActive(true);
+                screen3.SetActive(true);
+                break;
+        }
+    }
+    
     public void SetDayLog()
     {
         currentDay++;
@@ -61,75 +111,41 @@ public class DayLoggerScript : MonoBehaviour
                 logText.text = "F.A.T.E. is looking for a new operator" +
                     "\nApply now!";
                 break;
-
             case 1:
                 logText.text = "Welcome to your first day at F.A.T.E. as intership!" +
                     "\nYour job today is to make the cars on the screen crash as much as you can." +
                     "\nThe more cars you crash, higher your perfomance will be." +
                     "\n Whatever happens DO NOT press the big red button!" +
                     "\nGood Luck and remember that fate is at our hands!";
-                StartCoroutine(NexDay(day1Timer));
-                minigame1.SetActive(true);
-                screen1.SetActive(true);
                 break;
-
             case 2:
                 logText.text ="For the second day, your task is to approve foreign alins to enter earth." +
                     "\n Approve the ones with the mark below." +
                     "\nAnd don't forget your previous tasks! We'll be checking your perfomance!" +
                     "\nGood Luck and remember that fate is at our hands!";
-
-                mark.SetActive(true);
-                StartCoroutine(NexDay(day2Timer));
-                minigame1.SetActive(true);
-                screen1.SetActive(true);
-                minigame2.SetActive(true);
-                screen2.SetActive(true);
                 break;
-
             case 3:
                 logText.text = "We reached the third day mark." +
                     "\nToday you'll have to let the nukes hit the earth." +
                     "\nDon't worry, it's just a simulation of course!" +
                     "\nAnd don't forget your previous tasks! We'll be checking your perfomance!" +
                     "\nGood Luck and remember that fate is at our hands!";
-
-                StartCoroutine(NexDay(day3Timer));
-                minigame1.SetActive(true);
-                screen1.SetActive(true);
-                minigame2.SetActive(true);
-                screen2.SetActive(true);
-                minigame3.SetActive(true);
-                screen3.SetActive(true);
                 break;
-
             case 4:
                 logText.text = "Contratulations for reaching the last day of the intership!" +
                     "\nToday we'll be simulating a real experience as a operator at F.A.T.E." +
                     "\nDon't worry if things gets out of control, that's super normal!" +
                     "\nWe'll be checking your perfomance!" +
                     "\nGood Luck and remember that fate is at our hands!";
-
-                StartCoroutine(NexDay(day4Timer));
-                minigame1.SetActive(true);
-                screen1.SetActive(true);
-                minigame2.SetActive(true);
-                screen2.SetActive(true);
-                minigame3.SetActive(true);
-                screen3.SetActive(true);
                 break;
-
             case 5: //End Game
                 SceneManager.LoadScene("GameOverScene");
-
-
                 break;
         }
-
         dayText.text = "Day: "+ currentDay;
     }
 
-    IEnumerator NexDay( float timer)
+    private IEnumerator NexDay(float timer)
     {
         timeLeft = timer;
         inTimer = true;
@@ -138,22 +154,19 @@ public class DayLoggerScript : MonoBehaviour
         inTimer = false;
         timeText.text = "Time Left: 00:00";
         //Fader.FadeIn();
-
         yield return new WaitForSeconds(.6f);
-
         SceneManager.LoadScene("GameScene"); // reloads the scene for next day
-
     }
 
-    IEnumerator UpdateTimer()
+    private IEnumerator UpdateTimer()
     {
         while (inTimer == true)
         {
+            var bMin = Mathf.FloorToInt(timeLeft / 60);
+            var bSec = Mathf.FloorToInt(timeLeft % 60);
+            timeText.text = "Time Left: " + bMin.ToString("00") + ":" + bSec.ToString("00");
             yield return new WaitForSeconds(1f);
             timeLeft--;
-            int min = Mathf.FloorToInt(timeLeft / 60);
-            int sec = Mathf.FloorToInt(timeLeft % 60);
-            timeText.text = "Time Left: " + min.ToString("00") + ":" + sec.ToString("00");
         }
     }
 }

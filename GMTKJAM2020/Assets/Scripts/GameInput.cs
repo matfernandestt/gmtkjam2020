@@ -1,6 +1,7 @@
 ﻿using System;
 using Rewired;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameInput : MonoBehaviour
 {
@@ -20,7 +21,17 @@ public class GameInput : MonoBehaviour
     private void Awake()
     {
         input = ReInput.players.GetPlayer(0);
-        
+
+        SceneManager.activeSceneChanged += OnSceneChange;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.activeSceneChanged -= OnSceneChange;
+    }
+
+    private void OnSceneChange(Scene b, Scene a)
+    {
         Fader.FadeOut();
     }
 
