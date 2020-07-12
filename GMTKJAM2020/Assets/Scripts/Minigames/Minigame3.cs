@@ -5,19 +5,22 @@ public class Minigame3 : MonoBehaviour
 {
     [SerializeField] private GameObject planet;
     [SerializeField] private Transform barrier;
+    [SerializeField] private Minigame3_Explosive explosiveBase;
 
     private Coroutine transitionCoroutine;
 
     private void OnEnable()
     {
-        YellowButton.onYellowButtonPress += RotateClockwise;
-        BlueButton.onBlueButtonPress += RotateAnticlockwise;
+        ValveButton.onValveButtonPress += RotateClockwise;
+        Valve2Button.onValveButtonPress += RotateAnticlockwise;
+        
+        GenerateExplosive();
     }
 
     private void OnDisable()
     {
-        YellowButton.onYellowButtonPress -= RotateClockwise;
-        BlueButton.onBlueButtonPress -= RotateAnticlockwise;
+        ValveButton.onValveButtonPress -= RotateClockwise;
+        Valve2Button.onValveButtonPress -= RotateAnticlockwise;
     }
 
     private void RotateClockwise()
@@ -46,5 +49,24 @@ public class Minigame3 : MonoBehaviour
             barrier.rotation = Quaternion.Lerp(barrier.rotation, rotationAngle, step);      
             yield return null;
         }
+    }
+
+    private void GenerateExplosive()
+    {
+        IEnumerator Delay()
+        {
+            for (var i = 0; i < 10; i++)
+            {
+                Vector3 pos = Random.insideUnitCircle * 50;
+                pos += transform.position;
+                pos.z = barrier.transform.position.z;
+
+                var obj = Instantiate(explosiveBase);
+                obj.transform.position = pos;
+                obj.TranslateToPoint(planet.transform.position);
+                yield return new WaitForSeconds(.5f);
+            }
+        }
+        StartCoroutine(Delay());
     }
 }
