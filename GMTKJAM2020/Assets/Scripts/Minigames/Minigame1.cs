@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Minigame1 : MonoBehaviour
 {
@@ -31,6 +33,8 @@ public class Minigame1 : MonoBehaviour
 
     private void GenerateList()
     {
+        cardList = cardList.OrderBy(x => Random.value).ToList();
+        
         foreach (var card in cardList)
         {
             var obj = Instantiate(card, cardHolder);

@@ -34,6 +34,9 @@ public class DayLoggerScript : MonoBehaviour
     private bool inTimer = false;
 
     private bool pressedButton;
+
+    private Coroutine dayCoroutine;
+    private Coroutine timerCoroutine;
     
     private void Awake()
     {
@@ -45,6 +48,11 @@ public class DayLoggerScript : MonoBehaviour
     private void OnDestroy()
     {
         StartingButton.onStartingButtonPress -= OnUpdateTimer;
+        
+        if(dayCoroutine != null)
+            StopCoroutine(dayCoroutine);
+        if(timerCoroutine != null)
+            StopCoroutine(timerCoroutine);
     }
 
     private void Start()
@@ -65,12 +73,16 @@ public class DayLoggerScript : MonoBehaviour
         switch (currentDay)
         {
             case 1:
-                StartCoroutine(NexDay(day1Timer));
+                if(dayCoroutine != null)
+                    StopCoroutine(dayCoroutine);
+                dayCoroutine = StartCoroutine(NexDay(day1Timer));
                 minigame1.SetActive(true);
                 screen1.SetActive(true);
                 break;
             case 2:
-                StartCoroutine(NexDay(day2Timer));
+                if(dayCoroutine != null)
+                    StopCoroutine(dayCoroutine);
+                dayCoroutine = StartCoroutine(NexDay(day2Timer));
                 mark.SetActive(true);
                 minigame1.SetActive(true);
                 screen1.SetActive(true);
@@ -78,7 +90,9 @@ public class DayLoggerScript : MonoBehaviour
                 screen2.SetActive(true);
                 break;
             case 3:
-                StartCoroutine(NexDay(day3Timer));
+                if(dayCoroutine != null)
+                    StopCoroutine(dayCoroutine);
+                dayCoroutine = StartCoroutine(NexDay(day3Timer));
                 minigame1.SetActive(true);
                 screen1.SetActive(true);
                 minigame2.SetActive(true);
@@ -87,7 +101,9 @@ public class DayLoggerScript : MonoBehaviour
                 screen3.SetActive(true);
                 break;
             case 4:
-                StartCoroutine(NexDay(day4Timer));
+                if(dayCoroutine != null)
+                    StopCoroutine(dayCoroutine);
+                dayCoroutine = StartCoroutine(NexDay(day4Timer));
                 minigame1.SetActive(true);
                 screen1.SetActive(true);
                 minigame2.SetActive(true);
@@ -149,7 +165,9 @@ public class DayLoggerScript : MonoBehaviour
     {
         timeLeft = timer;
         inTimer = true;
-        StartCoroutine(UpdateTimer());
+        if(timerCoroutine != null)
+            StopCoroutine(timerCoroutine);
+        timerCoroutine =StartCoroutine(UpdateTimer());
         yield return new WaitForSeconds(timer);
         inTimer = false;
         timeText.text = "Time Left: 00:00";

@@ -17,6 +17,7 @@ public class BigButton : GenericButton
         base.Awake();
 
         onButtonClick += ButtonClick;
+        state = ButtonState.Closed;
     }
 
     protected override void OnDestroy()
