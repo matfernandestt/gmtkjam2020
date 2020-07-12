@@ -9,7 +9,7 @@ public class GenericButton : MonoBehaviour
     [SerializeField] protected Renderer rend;
     
     private static readonly int UseButton = Animator.StringToHash("UseButton");
-    private static readonly int OutlineProperty = Shader.PropertyToID("_OutlineWidth");
+    private static readonly int OutlineProperty = Shader.PropertyToID("_Outline");
 
     protected virtual void Awake()
     {
@@ -29,11 +29,11 @@ public class GenericButton : MonoBehaviour
 
     public void OnHover()
     {
-        rend.material.SetFloat(OutlineProperty, 1.2f);
+        rend.material.SetFloat(OutlineProperty, .05f);
     }
 
     private void DisableOutline()
     {
-        rend.material.SetFloat(OutlineProperty, 1f);
+        rend.material.SetFloat(OutlineProperty, 0f);
     }
 }
