@@ -20,6 +20,8 @@ public class GameInput : MonoBehaviour
     private void Awake()
     {
         input = ReInput.players.GetPlayer(0);
+        
+        Fader.FadeOut();
     }
 
     private const string inputMovementVertical = "MoveVertical";
