@@ -14,25 +14,11 @@ public class Minigame2_Car : MonoBehaviour
     private Coroutine patiencecoroutine;
 
     public CarColor color => carColor;
-    
-    private void OnEnable()
-    {
-        //StopCar();
-    }
 
     private void StopCar()
     {
         if(movementCoroutine != null)
             StopCoroutine(movementCoroutine);
-        
-        /*IEnumerator Patience()
-        {
-            yield return new WaitForSeconds(7f);
-            MoveCar();
-        }
-        if(patiencecoroutine != null)
-            StopCoroutine(patiencecoroutine);
-        patiencecoroutine = StartCoroutine(Patience());*/
     }
     
     public void MoveCar()
