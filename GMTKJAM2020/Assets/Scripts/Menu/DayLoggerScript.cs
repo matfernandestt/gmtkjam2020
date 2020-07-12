@@ -153,6 +153,7 @@ public class DayLoggerScript : MonoBehaviour
                     "\nDon't worry if things gets out of control, that's super normal!" +
                     "\nWe'll be checking your perfomance!" +
                     "\nGood Luck and remember that fate is at our hands!";
+                PlayerPrefs.SetInt("EndgameId", 0);
                 break;
             case 5: //End Game
                 SceneManager.LoadScene("GameOverScene");
