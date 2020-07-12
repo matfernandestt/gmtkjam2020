@@ -29,6 +29,10 @@ public class DayLoggerScript : MonoBehaviour
     public GameObject screen2;
     public GameObject screen3;
 
+    [Header("UI Elements")]
+    public AudioSource sireAudioS;
+    
+
     private int currentDay = 0;
     private float timeLeft;
     private bool inTimer = false;
@@ -83,7 +87,7 @@ public class DayLoggerScript : MonoBehaviour
                 if(dayCoroutine != null)
                     StopCoroutine(dayCoroutine);
                 dayCoroutine = StartCoroutine(NexDay(day2Timer));
-                mark.SetActive(true);
+               // mark.SetActive(true);
                 minigame1.SetActive(true);
                 screen1.SetActive(true);
                 minigame2.SetActive(true);
@@ -110,6 +114,7 @@ public class DayLoggerScript : MonoBehaviour
                 screen2.SetActive(true);
                 minigame3.SetActive(true);
                 screen3.SetActive(true);
+                sireAudioS.Play();
                 break;
         }
     }
@@ -135,14 +140,13 @@ public class DayLoggerScript : MonoBehaviour
                     "\nGood Luck and remember that fate is at our hands!";
                 break;
             case 2:
-                logText.text ="For the second day, your task is to approve foreign alins to enter earth." +
-                    "\n Approve the ones with the mark below." +
+                logText.text ="For the second day, your task is to approve foreign alins to enter Earth." +
                     "\nAnd don't forget your previous tasks! We'll be checking your perfomance!" +
                     "\nGood Luck and remember that fate is at our hands!";
                 break;
             case 3:
                 logText.text = "We reached the third day mark." +
-                    "\nToday you'll have to let the nukes hit the earth." +
+                    "\nToday you'll have to let the nukes hit the Earth." +
                     "\nDon't worry, it's just a simulation of course!" +
                     "\nAnd don't forget your previous tasks! We'll be checking your perfomance!" +
                     "\nGood Luck and remember that fate is at our hands!";
