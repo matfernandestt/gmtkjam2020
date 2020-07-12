@@ -29,7 +29,8 @@ public class DayLoggerScript : MonoBehaviour
     public GameObject screen3;
 
     private int currentDay = 0;
-
+    private float timeLeft;
+    private bool inTimer = false;
     private void Awake()
     {
         currentDay = PlayerPrefs.GetInt("CurrentDay");
@@ -52,6 +53,7 @@ public class DayLoggerScript : MonoBehaviour
         currentDay++;
         PlayerPrefs.SetInt("CurrentDay", currentDay);
         mark.SetActive(false);
+        //Fader.FadeOut();
 
         switch (currentDay)
         {
@@ -118,21 +120,24 @@ public class DayLoggerScript : MonoBehaviour
                 break;
 
             case 5: //End Game
-                //Load EndGame Scene
+                SceneManager.LoadScene("GameOverScene");
+
 
                 break;
         }
 
         dayText.text = "Day: "+ currentDay;
-        Fader.FadeOut();
     }
 
     IEnumerator NexDay( float timer)
     {
-
+        timeLeft = timer;
+        inTimer = true;
+        StartCoroutine(UpdateTimer());
         yield return new WaitForSeconds(timer);
-
-        Fader.FadeIn();
+        inTimer = false;
+        timeText.text = "Time Left: 00:00";
+        //Fader.FadeIn();
 
         yield return new WaitForSeconds(.6f);
 
@@ -140,4 +145,15 @@ public class DayLoggerScript : MonoBehaviour
 
     }
 
+    IEnumerator UpdateTimer()
+    {
+        while (inTimer == true)
+        {
+            yield return new WaitForSeconds(1f);
+            timeLeft--;
+            int min = Mathf.FloorToInt(timeLeft / 60);
+            int sec = Mathf.FloorToInt(timeLeft % 60);
+            timeText.text = "Time Left: " + min.ToString("00") + ":" + sec.ToString("00");
+        }
+    }
 }
