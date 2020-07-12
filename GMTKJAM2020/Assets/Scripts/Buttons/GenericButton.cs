@@ -25,6 +25,12 @@ public class GenericButton : MonoBehaviour
     {
         anim.SetTrigger(UseButton);
         onButtonClick?.Invoke();
+
+        //Play sound
+        if (TryGetComponent(out ButtonSoundScript sound))
+        {
+            sound.PlaySound();
+        }
     }
 
     public void OnHover()
