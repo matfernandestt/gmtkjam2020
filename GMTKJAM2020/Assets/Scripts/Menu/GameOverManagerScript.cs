@@ -6,6 +6,9 @@ using UnityEngine;
 public class GameOverManagerScript : MonoBehaviour
 {
     bool isPressed = false;
+    public GameObject yesImage;
+    public GameObject noImage;
+
     private void Awake()
     {
         GreenButton.onGreenButtonPress += Menu;
@@ -18,6 +21,20 @@ public class GameOverManagerScript : MonoBehaviour
     {
         GreenButton.onGreenButtonPress -= Menu;
         RedButton.onRedButtonPress -= QuitGame;
+    }
+
+    public void SetEndGame(int i)
+    {
+        if (i == 0)
+        {
+            yesImage.SetActive(true);
+            noImage.SetActive(false);
+        }
+        else
+        {
+            noImage.SetActive(true);
+            yesImage.SetActive(false);
+        }
     }
 
     private void Menu()
