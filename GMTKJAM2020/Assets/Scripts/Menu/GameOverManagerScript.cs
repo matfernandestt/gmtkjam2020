@@ -2,19 +2,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+
 
 public class GameOverManagerScript : MonoBehaviour
 {
     bool isPressed = false;
     public GameObject yesImage;
     public GameObject noImage;
+    public TextMeshProUGUI messageText;
+    public TextMeshProUGUI performanceText;
 
     private void Awake()
     {
         GreenButton.onGreenButtonPress += Menu;
         RedButton.onRedButtonPress += QuitGame;
         isPressed = false;
-        
+
+        if (PlayerPrefs.HasKey("EndgameId"))
+        {
+            SetEndGame(PlayerPrefs.GetInt("EndgameId"));
+        }
+        else
+        {
+            PlayerPrefs.SetInt("EndgameId",0);
+            SetEndGame(PlayerPrefs.GetInt("EndgameId"));
+
+        }
     }
 
     private void OnDestroy()
@@ -25,15 +39,25 @@ public class GameOverManagerScript : MonoBehaviour
 
     public void SetEndGame(int i)
     {
-        if (i == 0)
+        switch (i)
         {
-            yesImage.SetActive(true);
-            noImage.SetActive(false);
-        }
-        else
-        {
-            noImage.SetActive(true);
-            yesImage.SetActive(false);
+            case 0:
+                yesImage.SetActive(true);
+                noImage.SetActive(false);
+                messageText.text = "Thanks for playing!";
+                break;
+            case 1:
+                noImage.SetActive(true);
+                yesImage.SetActive(false);
+                messageText.text = "Thanks for playing!";
+
+                break;
+            case 2:
+                noImage.SetActive(true);
+                yesImage.SetActive(false);
+                messageText.text = "We told you to not press that button!";
+                break;
+
         }
     }
 

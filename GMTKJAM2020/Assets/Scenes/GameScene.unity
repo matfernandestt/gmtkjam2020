@@ -2986,7 +2986,7 @@ MonoBehaviour:
   day1Timer: 120
   day2Timer: 180
   day3Timer: 240
-  day4Timer: 240
+  day4Timer: 180
   minigame1: {fileID: 1457039607}
   minigame2: {fileID: 573297678}
   minigame3: {fileID: 1245347510}
