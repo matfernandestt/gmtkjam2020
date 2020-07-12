@@ -12,6 +12,7 @@ public class MenuManagerScript : MonoBehaviour
         GreenButton.onGreenButtonPress += StartGame;
         RedButton.onRedButtonPress += QuitGame;
         isPressed = false;
+        PlayerPrefs.SetInt("CurrentDay", 0);
     }
 
     private void OnDestroy()
@@ -33,7 +34,7 @@ public class MenuManagerScript : MonoBehaviour
         IEnumerator Wait()
         {
             yield return new WaitForSeconds(.5f);
-            SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadScene("GameScene");
         }
     }
 
