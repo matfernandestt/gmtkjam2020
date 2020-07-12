@@ -41,8 +41,7 @@ public class Minigame2_Car : MonoBehaviour
             StopCoroutine(patiencecoroutine);
         if(movementCoroutine != null)
             StopCoroutine(movementCoroutine);
-        if(gameObject.activeSelf)
-            movementCoroutine = StartCoroutine(Move());
+        movementCoroutine = StartCoroutine(Move());
     }
 
     private IEnumerator Move()
