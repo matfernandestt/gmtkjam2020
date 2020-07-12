@@ -11,7 +11,7 @@ public class MenuManagerScript : MonoBehaviour
     {
         GreenButton.onGreenButtonPress += StartGame;
         RedButton.onRedButtonPress += QuitGame;
-        
+        isPressed = false;
     }
 
     private void OnDestroy()
@@ -27,17 +27,20 @@ public class MenuManagerScript : MonoBehaviour
 
         isPressed = true;
 
+        Fader.FadeIn();
         StartCoroutine(Wait());
 
         IEnumerator Wait()
         {
-            yield return new WaitForSeconds(.3f);
+            yield return new WaitForSeconds(.5f);
             SceneManager.LoadScene("SampleScene");
         }
     }
 
     private void QuitGame()
     {
+        if (isPressed == true)
+            return;
         Application.Quit();
     }
 }
