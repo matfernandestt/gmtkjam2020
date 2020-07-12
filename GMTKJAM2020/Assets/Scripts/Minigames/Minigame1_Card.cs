@@ -7,6 +7,8 @@ public class Minigame1_Card : MonoBehaviour
     [SerializeField] private MinigameTinderCard cardInfo;
     [SerializeField] private Image cardImage;
     [SerializeField] private Animator anim;
+
+    public MinigameTinderCard GetCardData => cardInfo;
     
     private static readonly int RefuseTag = Animator.StringToHash("Refuse");
     private static readonly int AcceptTag = Animator.StringToHash("Accept");

@@ -29,11 +29,19 @@ public class GenericButton : MonoBehaviour
 
     public void OnHover()
     {
-        rend.material.SetFloat(OutlineProperty, .05f);
+        foreach (var material in rend.materials)
+        {
+            material.SetFloat(OutlineProperty, .05f);
+        }
+        //rend.material.SetFloat(OutlineProperty, .05f);
     }
 
     private void DisableOutline()
     {
-        rend.material.SetFloat(OutlineProperty, 0f);
+        foreach (var material in rend.materials)
+        {
+            material.SetFloat(OutlineProperty, 0f);
+        }
+        //rend.material.SetFloat(OutlineProperty, 0f);
     }
 }

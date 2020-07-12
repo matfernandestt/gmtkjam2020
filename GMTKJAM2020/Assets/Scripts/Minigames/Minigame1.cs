@@ -6,6 +6,8 @@ public class Minigame1 : MonoBehaviour
 {
     [SerializeField] private List<Minigame1_Card> cardList = new List<Minigame1_Card>();
     [SerializeField] private Transform cardHolder;
+    [SerializeField] private Transform worldCardPosition;
+    [SerializeField] private MinigameTinderWorldCard worldCardBase;
     
     private List<Minigame1_Card> cards = new List<Minigame1_Card>();
 
@@ -13,7 +15,7 @@ public class Minigame1 : MonoBehaviour
 
     private void OnEnable()
     {
-        RedButton.onRedButtonPress += Refuse;
+        LeverButton.onLeverButtonPress += Refuse;
         GreenButton.onGreenButtonPress += Accept;
         BlueButton.onBlueButtonPress += SuperLike;
         
@@ -22,7 +24,7 @@ public class Minigame1 : MonoBehaviour
 
     private void OnDisable()
     {
-        RedButton.onRedButtonPress -= Refuse;
+        LeverButton.onLeverButtonPress -= Refuse;
         GreenButton.onGreenButtonPress -= Accept;
         BlueButton.onBlueButtonPress -= SuperLike;
     }
@@ -39,6 +41,8 @@ public class Minigame1 : MonoBehaviour
     private void SuperLike()
     {
         if (cards.Count <= 0) return;
+        var obj = Instantiate(worldCardBase, worldCardPosition.position, Quaternion.identity);
+        obj.SetTexture(currentCard.GetCardData.img.texture);
         currentCard.OnClickSuperlike();
         cards.Remove(currentCard);
     }
